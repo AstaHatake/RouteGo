@@ -17,18 +17,20 @@
     <main class="container-principal">
         <section class="container-title">
 
-            <h2>Control de Gastos</h2>
+            <h2>Gestor</h2>
 
-            <h4>Mensuales</h4>
+            <h4>De Gastos Mensuales</h4>
 
         </section>
     
         <form>
+
             <label class="label" for="nombre">Nombre:</label class="label">
             <input type="text" id="nombre" name="nombre" required class="input" placeholder="Pago al Netflix">
         
             <label class="label" for="valor">Valor:</label class="label">
-            <input type="number" id="valor" name="valor" required class="input" placeholder=""><i class="fas fa-dollar-sign    "></i>
+            <input type="number" id="valor" name="valor" required class="input" placeholder="20$"></i>
+            <h6 class="sub-label">El valor debe estar en dolares</h6>
         
             <label class="label" for="categoria">Categoría:</label class="label">
             <select id="categoria" name="categoria" required class="input">
@@ -40,30 +42,67 @@
                 <option value="Educacion">Educación</option>
                 <option value="Otros">Otros</option>
             </select>
-    
-            <label class="label" for="descripcion">Descripción:</label class="label">
-            <textarea id="descripcion" name="descripcion" required class="input" ></textarea>
-            
+
+            <label class="label" for="fecha">Fecha:</label class="label">
+            <input type="date" id="fecha" name="fecha" required class="input"></i>
+            <h6 class="sub-label">La fecha en la que se emitió este gasto.</h6>
+
+            <label class="label" for="descripcion">Descripción Corta:</label class="label">
+            <textarea id="descripcion" name="descripcion" required class="input" maxlength="100" ></textarea>
+            <h6 class="sub-label">Pequeña y corta descripcion del gasto.</h6>
+                
+
             <button id="button">Añadir</button>
 
         </form>
+
+        <i class="fa fa-arrow-right arrow" id="arrowRight" aria-hidden="true"></i>
+
+        <i class="fa fa-arrow-up arrow" id="arrowUp" aria-hidden="true"></i>
+
     </main>
 
     <aside class="container-secundario">
+
+        <i class="fa fa-arrow-left arrow" id="arrowLeft" aria-hidden="true"></i>
+        
+        <i class="fa fa-arrow-down arrow" id="arrowDown" aria-hidden="true"></i>
+
         <section class="container-title">
 
-            <h2>Gastos 
-            </h2>
+            <h2>Gastos </h2>
 
-            <h4><i class="fa fa-arrow-left" aria-hidden="true"></i> AGREGA GASTOS</h4>
+            <h4>AGREGA GASTOS</h4>
             <h4 id="container-secundario-h4-responsive"><i class="fa-solid fa-arrow-up"></i></i> AGREGA GASTOS</h4>
+
+        </section>
+
+        <section class="container-gastos">
+                <div class="gasto">
+                    <h3 class="gasto-nombre">Pago al Netflix</h3>
+                    <h3 class="gasto-precio"><i class="fas fa-dollar-sign"></i><span> 30</span></h3>
+                    <h3 class="gasto-categoria">Entretenimiento</h3>
+                    <h3 class="gasto-descripcion">Pagando la factura del netflix</h3>
+
+                    <div class="gasto-botones">
+                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-pencil"></i>
+                    
+                        <i class="fa-solid fa-pencil second-pencil"></i>
+                    </div>         
+                </div>
+            
+            
+
 
         </section>
     
 
+        <h5 id="total">Total: <i class="fas fa-dollar-sign"></i><b>300</b></h5>
     </aside>
 
 
-
+    
+<script src="src/js/script.js"></script>
 </body>
 </html>
