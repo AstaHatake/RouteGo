@@ -12,7 +12,7 @@ let arrows = document.querySelectorAll(".arrow");
 
 let gastos = [];
 
-let wd = window.innerWidth;
+let wd = window.innerWidth;2
 
 alert(wd)
 
