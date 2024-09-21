@@ -14,6 +14,7 @@ let gastos = [];
 
 let wd = window.innerWidth;
 
+alert(wd)
 
 function showEditButtons (deleteButton, secondEditButton) {
     if (deleteButton.style.top === "-43px") {
