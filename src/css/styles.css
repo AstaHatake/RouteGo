@@ -178,7 +178,8 @@ form {
     width: 0px;
     height: 100%;
     position: absolute;
-    left: -600px;
+    left: -1550px;
+    bottom: 0;
     background-color: #000000d8;
     color: #ffffff;
     border: 0px solid #ffffff99;
@@ -193,6 +194,23 @@ form {
     z-index: 3;
 
 }
+
+
+.form-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+}
+
+.form-col {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
 
 #container-secundario-h4-responsive{
     display: none;
@@ -212,7 +230,6 @@ form {
 
     width: 100%;
     height: 50px;
-
 
     display: flex;
     flex-direction: row;
@@ -371,7 +388,7 @@ form {
 
     .container-secundario {
         right: 0;
-        bottom: 0px;
+        bottom: 0;
         z-index: 3;
     
     }
@@ -388,7 +405,7 @@ form {
 @media (max-width: 560px) {
     html {
         font-size: 10px;
-    }
+    }   
 
     .container-title{
         margin-top: -20px;
@@ -398,15 +415,17 @@ form {
         bottom: 10px;
     }
 
+    #arrowDown{
+        bottom: 50%;
+        transform: translateY(-50%);
+        right: auto;
+        left: auto;
+        right: -10px;
+    }
+
     .input{
         padding-left: 3px;
-        padding: 5px;
-        height: 24px;
-    }
-    .container-secundario {
-        left: 0px;
-        bottom: -1000px;
-        z-index: 3;
-    
+        padding: .7rem;
+        height: 3rem;
     }
 }

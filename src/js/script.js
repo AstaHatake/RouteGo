@@ -14,8 +14,6 @@ let gastos = [];
 
 let wd = window.innerWidth;
 
-alert(wd)
-
 function showEditButtons (deleteButton, secondEditButton) {
     if (deleteButton.style.top === "-43px") {
         deleteButton.style.top = "-10px";
@@ -55,26 +53,16 @@ function width (){
 }
 
 function changeContainer(arrow){
-
     if (arrow.id === "arrowRight" || arrow.id === "arrowUp" ) {
         containerGastos.style.width = width();
         containerGastos.style.left = "0";
-
-        if (wd <= 900) {
-            containerGastos.style.width = width();
-            containerGastos.style.bottom = "0";
-        }
 
         console.log(arrow.id)
 
     }
     else {
-        if (wd <= 900) {
-            containerGastos.style.width = "0px";
-            containerGastos.style.bottom = "-500px";
-        }
         containerGastos.style.width = "0px";
-        containerGastos.style.left = "-500px";
+        containerGastos.style.left = "-700px";
 
         console.log(arrow.id)
     }
@@ -114,7 +102,7 @@ editAllButton.forEach(editButton => {
 
 buttonAdd.addEventListener("click",(e)=>{
     e.preventDefault(); 
-    let nameGasto =  buttonAdd.parentElement.querySelector("#nombre").value;
+    let nombreGasto =  buttonAdd.parentElement.querySelector("#nombre").value;
     let valorGasto =  buttonAdd.parentElement.querySelector("#valor").value;
     let categoriaGasto =  buttonAdd.parentElement.querySelector("#categoria").value;
     let descripcionGasto = buttonAdd.parentElement.querySelector("#descripcion").value;
@@ -122,8 +110,7 @@ buttonAdd.addEventListener("click",(e)=>{
 
     /* Ahora procedemos a mostrar en consola los elementos obtenidos del DOM*/
 
-    console.log(nameGasto);
-
+    console.log(nombreGasto)
     console.log(valorGasto);
     console.log(categoriaGasto);
     console.log(descripcionGasto);
@@ -156,5 +143,10 @@ buttonAdd.addEventListener("click",(e)=>{
                 </div>
                 `
     })
+
+    containerGastos.style.width = width();
+    containerGastos.style.left = "0";
+
+
 
 })
