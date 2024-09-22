@@ -223,7 +223,7 @@ form {
 
     margin-top: 30px;
     position: relative;
-    padding: 10px;
+    padding: .5rem;
 }
 
 .gasto h3{
@@ -387,7 +387,21 @@ form {
 
 @media (max-width: 560px) {
     html {
-        font-size: 8px;
+        font-size: 10px;
+    }
+
+    .container-title{
+        margin-top: -20px;
+    }
+
+    #arrowUp{
+        bottom: 10px;
+    }
+
+    .input{
+        padding-left: 3px;
+        padding: 5px;
+        height: 24px;
     }
     .container-secundario {
         left: 0px;

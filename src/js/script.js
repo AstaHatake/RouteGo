@@ -1,4 +1,4 @@
-/* VARIABLES */
+//https://github.com/AstaHatake/RouteGo.git/* VARIABLES */
 
 let editAllButton = document.querySelectorAll(".fa-pencil");
 
@@ -12,7 +12,7 @@ let arrows = document.querySelectorAll(".arrow");
 
 let gastos = [];
 
-let wd = window.innerWidth;2
+let wd = window.innerWidth;
 
 alert(wd)
 
@@ -35,7 +35,7 @@ function width (){
     console.log("Ancho actual de la página: " + wd + "px");
     
     if (wd >= 1301) {
-        return "50%";
+        return "60%";
 
     }
 
@@ -114,11 +114,11 @@ editAllButton.forEach(editButton => {
 
 buttonAdd.addEventListener("click",(e)=>{
     e.preventDefault(); 
-    let nameGasto =  buttonAdd.parentElement.getElementById("nombre").value;
-    let valorGasto =  buttonAdd.parentElement.getElementById("valor").value;
-    let categoriaGasto =  buttonAdd.parentElement.getElementById("categoria").value;
-    let descripcionGasto = buttonAdd.parentElement.getElementById("descripcion").value;
-    let fechaGasto = buttonAdd.parentElement.getElementById("fecha").value;
+    let nameGasto =  buttonAdd.parentElement.querySelector("#nombre").value;
+    let valorGasto =  buttonAdd.parentElement.querySelector("#valor").value;
+    let categoriaGasto =  buttonAdd.parentElement.querySelector("#categoria").value;
+    let descripcionGasto = buttonAdd.parentElement.querySelector("#descripcion").value;
+    let fechaGasto = buttonAdd.parentElement.querySelector("#fecha").value;
 
     /* Ahora procedemos a mostrar en consola los elementos obtenidos del DOM*/
 
