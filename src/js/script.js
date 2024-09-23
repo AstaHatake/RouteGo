@@ -15,7 +15,13 @@ let editAllButton;
 
 let total = 0;
 
-let gastos = [];
+let gastos;
+
+if (localStorage.getItem("gastosSaved")) {
+    gastos = JSON.parse(localStorage.getItem("gastosSaved"));
+} else {
+    gastos = [];
+}
 
 let wd = window.innerWidth;
 
@@ -73,6 +79,46 @@ function changeContainer(arrow){
     }
 }
 
+function verifyInputs(name, price, category, description, date) {
+    // Validar nombre del gasto
+    if (!name || name.trim() === '') {
+        return { isValid: false, message: 'El nombre del gasto es requerido' };
+    }
+
+    // Validar precio del gasto
+    if (!price || isNaN(parseFloat(price)) || parseFloat(price) <= 0) {
+        return { isValid: false, message: 'El precio del gasto debe ser un número mayor que cero' };
+    }
+
+    // Validar categoría del gasto
+    if (!category || category.trim() === '') {
+        return { isValid: false, message: 'La categoría del gasto es requerida' };
+    }
+
+    // Validar descripción del gasto
+    if (!description || description.trim() === '') {
+        return { isValid: false, message: 'La descripción del gasto es requerida' };
+    } 
+    
+    // Validar fecha del gasto
+    if (!date || !isValidDate(date)) {
+        return { isValid: false, message: 'La fecha del gasto es requerida y debe ser válida' };
+    }
+
+    return { isValid: true, message: '' };
+}
+
+  // Función auxiliar para validar fechas
+    function isValidDate(dateString) {
+        const date = new Date(dateString);
+        return date instanceof Date && !isNaN(date.getTime());
+}
+
+function saveGasto(){
+    gastos = JSON.stringify(gastos);
+    localStorage.setItem('gastosSaved', gastos);
+}
+
 function loadGastos(){
     document.querySelector(".container-gastos").innerHTML = " ";
     totalHTML.innerHTML = " ";
@@ -125,6 +171,7 @@ function deleteGasto(parent){
     let price = parent.querySelector("#gasto-price-span").textContent;
     gastos = gastos.filter(gastoItem => gastoItem.name !== name);
     loadGastos();
+    saveGasto();
 }
 
 function createGasto(newGasto){
@@ -151,7 +198,7 @@ arrows[3].addEventListener("click",()=>{
 
 
 buttonAdd.addEventListener("click",(e)=>{
-    e.preventDefault(); 
+    e.preventDefault();
     let nameGasto =  buttonAdd.parentElement.querySelector("#name").value;
     let priceGasto =  buttonAdd.parentElement.querySelector("#price").value;
     let categoryGasto =  buttonAdd.parentElement.querySelector("#category").value;
@@ -159,12 +206,16 @@ buttonAdd.addEventListener("click",(e)=>{
     let dateGasto = buttonAdd.parentElement.querySelector("#date").value;
 
     /* Ahora procedemos a mostrar en consola los elementos obtenidos del DOM*/
-    let newGasto = {
-        "name" : nameGasto,
-        "price" : priceGasto,
-        "category" : categoryGasto,
-        "description" : descriptionGasto,
-        "date" : dateGasto
+    if (verifyInputs(nameGasto, priceGasto, categoryGasto, descriptionGasto, dateGasto).isValid){
+        let newGasto = {
+            "name" : nameGasto,
+            "price" : priceGasto,
+            "category" : categoryGasto,
+            "description" : descriptionGasto,
+            "date" : dateGasto
+        }
+    } else {
+        verifyInputs(nameGasto, priceGasto, categoryGasto, descriptionGasto, dateGasto);
     }
 
     let existeGastos = gastos.some(gastoItem => gastoItem.name == nameGasto);
@@ -189,7 +240,8 @@ buttonAdd.addEventListener("click",(e)=>{
     } 
 
     else{
-        createGasto(newGasto)
+        createGasto(newGasto);
+        saveGastos();
     }
     containerGastos.style.width = width();
     containerGastos.style.left = "0";
