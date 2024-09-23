@@ -1,6 +1,5 @@
 //https://github.com/AstaHatake/RouteGo.git/* VARIABLES */
 
-let editAllButton = document.querySelectorAll(".fa-pencil");
 
 let containerForm = document.querySelector(".container-principal");
 
@@ -9,6 +8,12 @@ let containerGastos = document.querySelector(".container-secundario");
 let buttonAdd = document.getElementById("button");
 
 let arrows = document.querySelectorAll(".arrow");
+
+let totalHTML = document.getElementById("total")
+
+let editAllButton;
+
+let total = 0;
 
 let gastos = [];
 
@@ -33,7 +38,7 @@ function width (){
     console.log("Ancho actual de la página: " + wd + "px");
     
     if (wd >= 1301) {
-        return "60%";
+        return "40%";
 
     }
 
@@ -68,6 +73,65 @@ function changeContainer(arrow){
     }
 }
 
+function loadGastos(){
+    document.querySelector(".container-gastos").innerHTML = " ";
+    totalHTML.innerHTML = " ";
+    total = 0;  
+    gastos.forEach(gasto => {
+        let gastoHtml = `
+            <div class="gasto">
+                <h3 class="gasto-name">${gasto.name}</h3>
+                <h3 class="gasto-precio"><i class="fas fa-dollar-sign"></i><span id="gasto-price-span"> ${gasto.price}</span></h3>
+                <h3 class="gasto-category">${gasto.category}</h3>
+                <h3 class="gasto-description">${gasto.description}</h3>
+                <h3 class="gasto-date">${gasto.date}</h3>
+                <div class="gasto-botones">
+                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-pencil"></i>
+                
+                    <i class="fa-solid fa-pencil second-pencil"></i>
+                </div>         
+            </div>
+            `
+        document.querySelector(".container-gastos").innerHTML += gastoHtml;
+        
+        total = total + parseInt(gasto.price);
+
+        editAllButton = document.querySelectorAll(".fa-pencil");
+    })
+
+
+    editAllButton.forEach(editButton => {
+        let deleteButton = editButton.parentElement.querySelector(".fa-xmark");
+        let secondEditButton = editButton.parentElement.querySelector(".second-pencil");
+    
+        editButton.addEventListener("click", ()=>{
+            showEditButtons(deleteButton,secondEditButton);
+        })
+    
+        deleteButton.addEventListener("click", ()=>{
+            deleteButton.style.top = "-10px";
+            secondEditButton.style = "top: -10px; right: -10px;";   
+            deleteGasto(deleteButton.parentElement.parentElement);
+        })
+    })
+
+    totalHTML.innerHTML = `Total: <i class="fas fa-dollar-sign"></i><b>${total}</b>`
+
+}
+
+function deleteGasto(parent){
+    let name = parent.querySelector(".gasto-name").textContent;
+    let price = parent.querySelector("#gasto-price-span").textContent;
+    gastos = gastos.filter(gastoItem => gastoItem.name !== name);
+    loadGastos();
+}
+
+function createGasto(newGasto){
+    gastos.push(newGasto);
+    loadGastos();   
+}
+
 arrows[0].addEventListener("click",()=>{
     changeContainer(arrows[0]);
 })
@@ -86,67 +150,47 @@ arrows[3].addEventListener("click",()=>{
 })
 
 
-editAllButton.forEach(editButton => {
-    let deleteButton = editButton.parentElement.querySelector(".fa-xmark");
-    let secondEditButton = editButton.parentElement.querySelector(".second-pencil");
-
-    editButton.addEventListener("click", ()=>{
-        showEditButtons(deleteButton,secondEditButton);
-    })
-
-    deleteButton.addEventListener("click", ()=>{
-        deleteButton.style.top = "-10px";
-        secondEditButton.style = "top: -10px; right: -10px;";    
-    })
-})
-
 buttonAdd.addEventListener("click",(e)=>{
     e.preventDefault(); 
-    let nombreGasto =  buttonAdd.parentElement.querySelector("#nombre").value;
-    let valorGasto =  buttonAdd.parentElement.querySelector("#valor").value;
-    let categoriaGasto =  buttonAdd.parentElement.querySelector("#categoria").value;
-    let descripcionGasto = buttonAdd.parentElement.querySelector("#descripcion").value;
-    let fechaGasto = buttonAdd.parentElement.querySelector("#fecha").value;
+    let nameGasto =  buttonAdd.parentElement.querySelector("#name").value;
+    let priceGasto =  buttonAdd.parentElement.querySelector("#price").value;
+    let categoryGasto =  buttonAdd.parentElement.querySelector("#category").value;
+    let descriptionGasto = buttonAdd.parentElement.querySelector("#description").value;
+    let dateGasto = buttonAdd.parentElement.querySelector("#date").value;
 
     /* Ahora procedemos a mostrar en consola los elementos obtenidos del DOM*/
-
-    console.log(nombreGasto)
-    console.log(valorGasto);
-    console.log(categoriaGasto);
-    console.log(descripcionGasto);
-    console.log(fechaGasto);
-
-    let nuevoGasto = {
-        "nombre" : nombreGasto,
-        "valor" : valorGasto,
-        "categoria" : categoriaGasto,
-        "descripcion" : descripcionGasto,
-        "fecha" : fechaGasto
+    let newGasto = {
+        "name" : nameGasto,
+        "price" : priceGasto,
+        "category" : categoryGasto,
+        "description" : descriptionGasto,
+        "date" : dateGasto
     }
 
-    gastos.push(nuevoGasto);
+    let existeGastos = gastos.some(gastoItem => gastoItem.name == nameGasto);
 
-    gastos.forEach(gasto => {
-        let gastoHtml = `
-                <div class="gasto">
-                    <h3 class="gasto-nombre">${gasto.nombre}</h3>
-                    <h3 class="gasto-precio"><i class="fas fa-dollar-sign"></i><span> ${gasto.valor}</span></h3>
-                    <h3 class="gasto-categoria">${gasto.categoria}</h3>
-                    <h3 class="gasto-descripcion">${gasto.descripcion}</h3>
+    if (existeGastos) {
+        alert("El gasto ya existe");
 
-                    <div class="gasto-botones">
-                        <i class="fa-solid fa-xmark"></i>
-                        <i class="fa-solid fa-pencil"></i>
-                    
-                        <i class="fa-solid fa-pencil second-pencil"></i>
-                    </div>         
-                </div>
-                `
-    })
+        editAllButton.forEach(editButton => {
+            let deleteButton = editButton.parentElement.querySelector(".fa-xmark");
+            let secondEditButton = editButton.parentElement.querySelector(".second-pencil");
+        
+            editButton.addEventListener("click", ()=>{
+                showEditButtons(deleteButton,secondEditButton);
+            })
+        
+            deleteButton.addEventListener("click", ()=>{
+                deleteButton.style.top = "-10px";
+                secondEditButton.style = "top: -10px; right: -10px;";    
+            })
+        })
 
+    } 
+
+    else{
+        createGasto(newGasto)
+    }
     containerGastos.style.width = width();
     containerGastos.style.left = "0";
-
-
-
 })
