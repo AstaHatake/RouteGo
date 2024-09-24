@@ -15,26 +15,18 @@ let editAllButton;
 
 let total = 0;
 
-let gastos;
-
-if (localStorage.getItem("gastosSaved")) {
-    gastos = JSON.parse(localStorage.getItem("gastosSaved"));
-} else {
-    gastos = [];
-}
+let gastos = [];
 
 let wd = window.innerWidth;
 
-function showEditButtons (deleteButton, secondEditButton) {
+function showEditButtons (deleteButton) {
     if (deleteButton.style.top === "-43px") {
         deleteButton.style.top = "-10px";
-        secondEditButton.style = "top: -10px; right: -10px;";
 
     }
     else {
 
         deleteButton.style.top = "-43px";
-        secondEditButton.style = "top: -43px; right: 24px;";
     
     }
 
@@ -44,9 +36,9 @@ function width (){
     console.log("Ancho actual de la página: " + wd + "px");
     
     if (wd >= 1301) {
-        return "40%";
+        return "50%";
 
-    }
+    }   
 
     if (wd <= 868) {
         return "97%";
@@ -109,14 +101,9 @@ function verifyInputs(name, price, category, description, date) {
 }
 
   // Función auxiliar para validar fechas
-    function isValidDate(dateString) {
+function isValidDate(dateString) {
         const date = new Date(dateString);
         return date instanceof Date && !isNaN(date.getTime());
-}
-
-function saveGasto(){
-    gastos = JSON.stringify(gastos);
-    localStorage.setItem('gastosSaved', gastos);
 }
 
 function loadGastos(){
@@ -134,8 +121,6 @@ function loadGastos(){
                 <div class="gasto-botones">
                     <i class="fa-solid fa-xmark"></i>
                     <i class="fa-solid fa-pencil"></i>
-                
-                    <i class="fa-solid fa-pencil second-pencil"></i>
                 </div>         
             </div>
             `
@@ -143,27 +128,28 @@ function loadGastos(){
         
         total = total + parseInt(gasto.price);
 
-        editAllButton = document.querySelectorAll(".fa-pencil");
+
     })
 
+    editAllButton = document.querySelectorAll(".fa-pencil");
 
     editAllButton.forEach(editButton => {
-        let deleteButton = editButton.parentElement.querySelector(".fa-xmark");
-        let secondEditButton = editButton.parentElement.querySelector(".second-pencil");
-    
+        let deleteButton = editButton.parentElement.querySelector(".fa-xmark"); 
+
         editButton.addEventListener("click", ()=>{
-            showEditButtons(deleteButton,secondEditButton);
+            showEditButtons(deleteButton);
+
         })
     
         deleteButton.addEventListener("click", ()=>{
+            console.log(deleteButton);
             deleteButton.style.top = "-10px";
-            secondEditButton.style = "top: -10px; right: -10px;";   
-            deleteGasto(deleteButton.parentElement.parentElement);
+            deleteGasto(deleteButton.parentElement.parentElement);  
         })
     })
 
     totalHTML.innerHTML = `Total: <i class="fas fa-dollar-sign"></i><b>${total}</b>`
-
+    
 }
 
 function deleteGasto(parent){
@@ -171,7 +157,6 @@ function deleteGasto(parent){
     let price = parent.querySelector("#gasto-price-span").textContent;
     gastos = gastos.filter(gastoItem => gastoItem.name !== name);
     loadGastos();
-    saveGasto();
 }
 
 function createGasto(newGasto){
@@ -186,7 +171,6 @@ arrows[0].addEventListener("click",()=>{
 arrows[1].addEventListener("click",()=>{
     changeContainer(arrows[1]);
 })
-
 
 arrows[2].addEventListener("click",()=>{
     changeContainer(arrows[2]);
@@ -205,44 +189,29 @@ buttonAdd.addEventListener("click",(e)=>{
     let descriptionGasto = buttonAdd.parentElement.querySelector("#description").value;
     let dateGasto = buttonAdd.parentElement.querySelector("#date").value;
 
-    /* Ahora procedemos a mostrar en consola los elementos obtenidos del DOM*/
-    if (verifyInputs(nameGasto, priceGasto, categoryGasto, descriptionGasto, dateGasto).isValid){
-        let newGasto = {
-            "name" : nameGasto,
-            "price" : priceGasto,
-            "category" : categoryGasto,
-            "description" : descriptionGasto,
-            "date" : dateGasto
-        }
-    } else {
-        verifyInputs(nameGasto, priceGasto, categoryGasto, descriptionGasto, dateGasto);
-    }
-
     let existeGastos = gastos.some(gastoItem => gastoItem.name == nameGasto);
 
     if (existeGastos) {
         alert("El gasto ya existe");
-
-        editAllButton.forEach(editButton => {
-            let deleteButton = editButton.parentElement.querySelector(".fa-xmark");
-            let secondEditButton = editButton.parentElement.querySelector(".second-pencil");
-        
-            editButton.addEventListener("click", ()=>{
-                showEditButtons(deleteButton,secondEditButton);
-            })
-        
-            deleteButton.addEventListener("click", ()=>{
-                deleteButton.style.top = "-10px";
-                secondEditButton.style = "top: -10px; right: -10px;";    
-            })
-        })
-
     } 
 
     else{
-        createGasto(newGasto);
-        saveGastos();
+        if (verifyInputs(nameGasto, priceGasto, categoryGasto, descriptionGasto, dateGasto).isValid){
+            let newGasto = {
+                "name" : nameGasto,
+                "price" : priceGasto,
+                "category" : categoryGasto,
+                "description" : descriptionGasto,
+                "date" : dateGasto
+            }
+            createGasto(newGasto);
+            containerGastos.style.width = width();
+            containerGastos.style.left = "0";
+        } else {
+            alert(verifyInputs(nameGasto, priceGasto, categoryGasto, descriptionGasto, dateGasto).message)
+        }
+
+
     }
-    containerGastos.style.width = width();
-    containerGastos.style.left = "0";
+
 })
