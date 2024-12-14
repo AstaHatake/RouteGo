@@ -14,24 +14,43 @@
 </head>
 <body>
     
+
     <main class="container-principal">
         <section class="container-title">
 
-            <h2>Control de Gastos</h2>
+            <h2>Gestor</h2>
 
-            <h4>Mensuales</h4>
+            <h4>De Gastos Mensuales</h4>
 
         </section>
     
         <form>
-            <label class="label" for="nombre">Nombre:</label class="label">
-            <input type="text" id="nombre" name="nombre" required class="input" placeholder="Pago al Netflix">
+
+            <label class="label" for="name">Nombre:</label class="label">
+            <input type="text" id="name" name="name" required class="input" placeholder="Pago al Netflix">
         
-            <label class="label" for="valor">Valor:</label class="label">
-            <input type="number" id="valor" name="valor" required class="input" placeholder=""><i class="fas fa-dollar-sign    "></i>
+            <div class="form-row">
+
+                <div class="form-col">
+                    <label class="label" for="price">Valor:</label class="label">
+                
+                    <input type="number" id="price" name="price" required class="input" placeholder="20$"></i>
+
+                    <h6 class="sub-label">El valor debe estar en dolares</h6>
+                </div>
+                
+                <div class="form-col">
+                    <label class="label" for="date">Fecha:</label class="label">
+                
+                    <input type="date" id="date" name="date" required class="input"></i>
+
+                    <h6 class="sub-label">La fecha en la que se emitió. </h6>
+                </div>
+                
+            </div>
         
-            <label class="label" for="categoria">Categoría:</label class="label">
-            <select id="categoria" name="categoria" required class="input">
+            <label class="label" for="category">Categoría:</label class="label">
+            <select id="category" name="category" required class="input">
                 <option value="Default">Categoria</option>
                 <option value="Entretenimiento">Entretenimiento</option>
                 <option value="Salud">Salud</option>
@@ -40,30 +59,50 @@
                 <option value="Educacion">Educación</option>
                 <option value="Otros">Otros</option>
             </select>
+
+            <label class="label" for="description">Descripción Corta:</label class="label">
+            <input type="text" id="description" name="description" required class="input" maxlength="100" >
+            <h6 class="sub-label">Pequeña y corta descripcion del gasto.</h6>
     
-            <label class="label" for="descripcion">Descripción:</label class="label">
-            <textarea id="descripcion" name="descripcion" required class="input" ></textarea>
-            
             <button id="button">Añadir</button>
 
+            <i class="fa fa-arrow-right arrow" id="arrowUp" aria-hidden="true"></i>
         </form>
+
+            
+            <i class="fa fa-arrow-right arrow" id="arrowRight" aria-hidden="true"></i>
+
+
     </main>
 
     <aside class="container-secundario">
+
+        <i class="fa fa-arrow-left arrow" id="arrowLeft" aria-hidden="true"></i>
+        
+        <i class="fa fa-arrow-left arrow" id="arrowDown" aria-hidden="true"></i>
+
         <section class="container-title">
 
-            <h2>Gastos 
-            </h2>
+            <h2>Gastos</h2>
 
-            <h4><i class="fa fa-arrow-left" aria-hidden="true"></i> AGREGA GASTOS</h4>
+            <h4>AGREGA GASTOS</h4>
             <h4 id="container-secundario-h4-responsive"><i class="fa-solid fa-arrow-up"></i></i> AGREGA GASTOS</h4>
+
+        </section>
+
+        <section class="container-gastos">
+            
+            
+
 
         </section>
     
 
+        <h5 id="total">Total: <i class="fas fa-dollar-sign"></i><b>00</b></h5>
     </aside>
 
 
-
+    
+<script src="src/js/script.js"></script>
 </body>
 </html>
